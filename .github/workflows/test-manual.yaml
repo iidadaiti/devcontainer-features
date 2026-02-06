@@ -75,9 +75,9 @@ jobs:
 
       - name: Run feature test
         run: |
-          if ${{ inputs.user }} == 'auto'; then
+          if [ "${{ inputs.user }}" == "auto" ]; then
             devcontainer features test --skip-scenarios --skip-duplicated -f ${{ inputs.feature }} -i ${{ inputs.image }} --log-level ${{ inputs.log_level }} .
-          elif ${{ inputs.user }} != 'test_user'; then
+          elif [ "${{ inputs.user }}" != "test_user" ]; then
             devcontainer features test --skip-scenarios --skip-duplicated -f ${{ inputs.feature }} -i test-image -u ${{ inputs.user }} --log-level ${{ inputs.log_level }} .
           else
             devcontainer features test --skip-scenarios --skip-duplicated -f ${{ inputs.feature }} -i ${{ inputs.image }} -u ${{ inputs.user }} --log-level ${{ inputs.log_level }} .
