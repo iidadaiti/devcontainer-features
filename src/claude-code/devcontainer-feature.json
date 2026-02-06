@@ -1,0 +1,24 @@
+{
+  "id": "claude-code",
+  "version": "1.0.0",
+  "name": "Claude Code",
+  "description": "Installs Claude Code CLI tool for AI-powered development assistance",
+  "options": {
+    "claudeCodeVersion": {
+      "type": "string",
+      "proposals": [
+        "latest",
+        "stable"
+      ],
+      "default": "latest",
+      "description": "Version of Claude Code CLI to install"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "claude-code.claude-code"
+      ]
+    }
+  }
+}

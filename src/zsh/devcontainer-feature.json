@@ -1,0 +1,53 @@
+{
+  "id": "zsh",
+  "version": "1.0.0",
+  "name": "Zsh",
+  "description": "Installs Zsh",
+  "options": {
+    "pluginDir": {
+      "type": "string",
+      "default": "automatic",
+      "description": "Directory to install zsh plugins into"
+    },
+    "pure": {
+      "type": "string",
+      "default": "",
+      "proposals": [
+        "main"
+      ],
+      "description": "Git ref for https://github.com/sindresorhus/pure (empty to skip)"
+    },
+    "zshAutosuggestions": {
+      "type": "string",
+      "default": "",
+      "proposals": [
+        "main"
+      ],
+      "description": "Git ref for https://github.com/zsh-users/zsh-autosuggestions (empty to skip)"
+    },
+    "zshSyntaxHighlighting": {
+      "type": "string",
+      "default": "",
+      "proposals": [
+        "main"
+      ],
+      "description": "Git ref for https://github.com/zsh-users/zsh-syntax-highlighting (empty to skip)"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.profiles.linux": {
+          "zsh": {
+            "path": "zsh"
+          }
+        }
+      }
+    }
+  },
+  "installsAfter": [
+    "ghcr.io/devcontainers/features/common-utils",
+    "ghcr.io/devcontainers/features/git"
+  ]
+}

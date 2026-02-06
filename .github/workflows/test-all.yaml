@@ -1,0 +1,32 @@
+name: Test Features
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Test ${{ matrix.features }} on ${{ matrix.baseImage }}
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        features:
+          - zsh
+          - tmux
+          - claude-code
+        baseImage:
+          - ubuntu
+          - debian
+          - alpine
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install DevContainer CLI
+        run: npm install -g @devcontainers/cli
+
+      - name: Run tests
+        run: devcontainer features test --skip-scenarios --skip-duplicated -f ${{ matrix.features }} -i ${{ matrix.baseImage }} .
