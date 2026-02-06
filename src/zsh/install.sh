@@ -206,6 +206,19 @@ fi
 # Create .zshrc configuration
 ZSHRC="${HOME}/.zshrc"
 cat <<"EOF" >> "${ZSHRC}"
+# zsh compile
+function source {
+  ensure_zcompiled \${1}
+  builtin source \${1}
+}
+function ensure_zcompiled {
+  local compiled="\${1}.zwc"
+  if [[ ! -r "\$compiled" || "\${1}" -nt "\$compiled" ]]; then
+    zcompile \${1}
+  fi
+}
+ensure_zcompiled ${HOME}/.zshrc
+
 # Enable color
 export TERM=xterm-256color
 export COLORTERM=truecolor
@@ -277,6 +290,11 @@ source "${ZSH_SYNTAX_HIGHLIGHTING_DIR}/zsh-syntax-highlighting.zsh"
 EOF
     fi
 fi
+
+cat <<'EOF' >> "${ZSHRC}"
+unfunction source
+
+EOF
 BASE_EOF
 
 # Export environment variables for the configuration script
