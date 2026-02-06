@@ -2,6 +2,18 @@
 
 This repository contains a collection of [Dev Container Features](https://containers.dev/implementors/features/) for use with development containers.
 
+## Installation
+
+This repository is not published as a package. To use these features, clone the repository and reference them with local paths.
+
+```bash
+git clone https://github.com/iidadaiti/devcontainer-features.git --depth=1
+mkdir -p .devcontainer
+cp -r devcontainer-features/src .devcontainer/features
+```
+
+Then reference the features in your `.devcontainer/devcontainer.json` using relative or absolute paths.
+
 ## Features
 
 ### Claude Code
@@ -17,7 +29,7 @@ Installs the [Claude Code CLI](https://claude.com/claude-code) tool for AI-power
 ```json
 {
   "features": {
-    "ghcr.io/your-username/features/claude-code:1": {
+    "./features/claude-code": {
       "claudeCodeVersion": "latest"
     }
   }
@@ -33,7 +45,7 @@ Installs [tmux](https://github.com/tmux/tmux), a terminal multiplexer.
 ```json
 {
   "features": {
-    "ghcr.io/your-username/features/tmux:1": {}
+    "./features/tmux": {}
   }
 }
 ```
@@ -54,7 +66,7 @@ Installs [Zsh](https://www.zsh.org/) shell with optional plugins.
 ```json
 {
   "features": {
-    "ghcr.io/your-username/features/zsh:1": {
+    "./features/zsh": {
       "pure": "main",
       "zshAutosuggestions": "main",
       "zshSyntaxHighlighting": "main"
