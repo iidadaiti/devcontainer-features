@@ -292,7 +292,7 @@ EOF
     fi
 fi
 
-cat <<'EOF' >> "${ZSHRC}"
+cat <<'EOF' >> "\${ZSHRC}"
 unfunction source
 
 EOF
