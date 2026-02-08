@@ -195,17 +195,18 @@ ZSH_TMPDIR=$(mktemp -d) || {
 }
 chmod 755 "${ZSH_TMPDIR}"
 ZSH_CONFIGURE_SCRIPT="${ZSH_TMPDIR}/configure_zsh.sh"
-cat > "${ZSH_CONFIGURE_SCRIPT}" <<'BASE_EOF'
+
+cat > "${ZSH_CONFIGURE_SCRIPT}" <<BASE_EOF
 #!/bin/sh
 # Check if HOME is valid and writable
-if [ -z "${HOME}" ] || [ "${HOME}" = "/" ] || [ "${HOME}" = "/nonexistent" ] || ! [ -d "${HOME}" ] || ! [ -w "${HOME}" ]; then
+if [ -z "\${HOME}" ] || [ "\${HOME}" = "/" ] || [ "\${HOME}" = "/nonexistent" ] || ! [ -d "\${HOME}" ] || ! [ -w "\${HOME}" ]; then
     echo "Skipping zsh configuration (HOME directory not writable)"
     exit 0
 fi
 
 # Create .zshrc configuration
-ZSHRC="${HOME}/.zshrc"
-cat <<"EOF" >> "${ZSHRC}"
+ZSHRC="\${HOME}/.zshrc"
+cat <<"EOF" >> "\${ZSHRC}"
 # Enable color
 export TERM=xterm-256color
 export COLORTERM=truecolor
@@ -231,14 +232,14 @@ mkdir -p "${PLUGIN_DIR}"
 # Install Pure theme if requested
 if [ -n "${PURE}" ] && [ ! -d "${PLUGIN_DIR}/pure" ]; then
     PURE_DIR="${PLUGIN_DIR}/pure"
-    if git clone --depth 1 https://github.com/sindresorhus/pure.git "${PURE_DIR}"; then
-        git -C "${PURE_DIR}" fetch --depth 1 origin "${PURE}"
-        git -C "${PURE_DIR}" checkout FETCH_HEAD
-        rm -rf "${PURE_DIR}/.git"
+    if git clone --depth 1 https://github.com/sindresorhus/pure.git "\${PURE_DIR}"; then
+        git -C "\${PURE_DIR}" fetch --depth 1 origin "${PURE}"
+        git -C "\${PURE_DIR}" checkout FETCH_HEAD
+        rm -rf "\${PURE_DIR}/.git"
 
-        cat <<EOF >> "${ZSHRC}"
+        cat <<EOF >> "\${ZSHRC}"
 # Pure theme setup
-fpath+="${PURE_DIR}"
+fpath+="\${PURE_DIR}"
 autoload -U promptinit; promptinit
 prompt pure
 
@@ -249,14 +250,14 @@ fi
 # Install zsh-autosuggestions if requested
 if [ -n "${ZSH_AUTOSUGGESTIONS}" ] && [ ! -d "${PLUGIN_DIR}/zsh-autosuggestions" ]; then
     ZSH_AUTOSUGGESTIONS_DIR="${PLUGIN_DIR}/zsh-autosuggestions"
-    if git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions.git "${ZSH_AUTOSUGGESTIONS_DIR}"; then
-        git -C "${ZSH_AUTOSUGGESTIONS_DIR}" fetch --depth 1 origin "${ZSH_AUTOSUGGESTIONS}"
-        git -C "${ZSH_AUTOSUGGESTIONS_DIR}" checkout FETCH_HEAD
-        rm -rf "${ZSH_AUTOSUGGESTIONS_DIR}/.git"
+    if git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions.git "\${ZSH_AUTOSUGGESTIONS_DIR}"; then
+        git -C "\${ZSH_AUTOSUGGESTIONS_DIR}" fetch --depth 1 origin "${ZSH_AUTOSUGGESTIONS}"
+        git -C "\${ZSH_AUTOSUGGESTIONS_DIR}" checkout FETCH_HEAD
+        rm -rf "\${ZSH_AUTOSUGGESTIONS_DIR}/.git"
 
-        cat <<EOF >> "${ZSHRC}"
+        cat <<EOF >> "\${ZSHRC}"
 # Setup zsh-autosuggestions
-source "${ZSH_AUTOSUGGESTIONS_DIR}/zsh-autosuggestions.zsh"
+source "\${ZSH_AUTOSUGGESTIONS_DIR}/zsh-autosuggestions.zsh"
 
 EOF
     fi
@@ -265,14 +266,14 @@ fi
 # Install zsh-syntax-highlighting if requested
 if [ -n "${ZSH_SYNTAX_HIGHLIGHTING}" ] && [ ! -d "${PLUGIN_DIR}/zsh-syntax-highlighting" ]; then
     ZSH_SYNTAX_HIGHLIGHTING_DIR="${PLUGIN_DIR}/zsh-syntax-highlighting"
-    if git clone --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting.git "${ZSH_SYNTAX_HIGHLIGHTING_DIR}"; then
-        git -C "${ZSH_SYNTAX_HIGHLIGHTING_DIR}" fetch --depth 1 origin "${ZSH_SYNTAX_HIGHLIGHTING}"
-        git -C "${ZSH_SYNTAX_HIGHLIGHTING_DIR}" checkout FETCH_HEAD
-        rm -rf "${ZSH_SYNTAX_HIGHLIGHTING_DIR}/.git"
+    if git clone --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting.git "\${ZSH_SYNTAX_HIGHLIGHTING_DIR}"; then
+        git -C "\${ZSH_SYNTAX_HIGHLIGHTING_DIR}" fetch --depth 1 origin "${ZSH_SYNTAX_HIGHLIGHTING}"
+        git -C "\${ZSH_SYNTAX_HIGHLIGHTING_DIR}" checkout FETCH_HEAD
+        rm -rf "\${ZSH_SYNTAX_HIGHLIGHTING_DIR}/.git"
 
-        cat <<EOF >> "${ZSHRC}"
+        cat <<EOF >> "\${ZSHRC}"
 # Setup zsh-syntax-highlighting
-source "${ZSH_SYNTAX_HIGHLIGHTING_DIR}/zsh-syntax-highlighting.zsh"
+source "\${ZSH_SYNTAX_HIGHLIGHTING_DIR}/zsh-syntax-highlighting.zsh"
 
 EOF
     fi
